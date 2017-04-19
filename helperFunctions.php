@@ -93,6 +93,9 @@
 						"Price" => $xml_response->Items->Item->OfferSummary->LowestNewPrice->FormattedPrice
 						);
 	
+		print_r($xml_response);
+		echo "<br>";
+		print_r($result);
 		return 	$result;				  	
     }
 	
