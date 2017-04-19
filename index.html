@@ -1,0 +1,110 @@
+<html>
+	<head>
+		<title>Quantum App</title>    
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	  
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				var ajaxurl = 'helperFunctions.php';
+				var data =  {'action': 'showData'};
+				$.post(ajaxurl, data, function (response) {
+						$("#tableData").html(response);
+					});
+				$('#searchFunc').click(function(){
+					var clickBtnValue = $(this).val();
+					var seachKey = $('#searchKey').val()
+					var ajaxurl = 'helperFunctions.php',
+					data =  {'action': clickBtnValue, 'searchKey': seachKey };
+					$.post(ajaxurl, data, function (response) {
+						// Response div goes here.
+						var result = response.split(";");
+						$('#asin').text(result[0]);
+						$('#title').text(result[1]);
+						$('#mpn').text(result[2]);
+						$('#price').text(result[3]);
+					});
+				});
+				
+				$('#InsertData').click(function(){	
+					var ajaxurl = 'helperFunctions.php',
+					data =  {'action': 'InsertData', 'asin': $('#asin').text() , 'title': $('#title').text() , 'mpn': $('#mpn').text() , 'price': $('#price').text()};
+					$.post(ajaxurl, data, function (response) {
+						
+					});
+					data =  {'action': 'showData'}
+					$.post(ajaxurl, data, function (response) {
+						$("#tableData").html(response);
+					});
+				});
+				
+				
+			});
+		</script>
+		
+	</head>
+
+	<body>
+		<div class="row">
+		  <div class="col-lg-6">
+			<center><h1> Search DB</h1></center>
+			<br>
+			<br>
+			<center>
+			<div id="tableData" name = "tableData"> 
+			</div></center>
+		  </div>
+		  
+		  <div class="col-lg-6">
+			
+			<center><h1> Search Amazon</h1></center>
+			
+			<br>
+			<br>
+			
+			<center><div>
+				  <input type="text" id = "searchKey" name="searchKey"> 
+				  <input type="submit" class="button" id="searchFunc" name="searchFunc" value="Submit">
+			</div></center>
+			
+			<br>
+			<br>
+			
+			<center>
+			<div>
+				<table style="width:100%" cellpadding = "10" cellspacing = "5">
+				  <tr>
+					<td><b>ASIN:</b></td>
+					<td><label id="asin" name = "asin"> </td> 
+				  </tr>
+				  <tr>
+					<td><b>Title:</b></td>
+					<td><label id="title" name = "title"> </td> 
+				  </tr>
+				  <tr>
+					<td><b>MPN:</b></td>
+					<td><label id="mpn" name = "mpn"> </td> 
+				  </tr>
+				  <tr>
+					<td><b>Price:</b></td>
+					<td><label id="price" name = "price"> </td>  
+				  </tr>
+				  <tr>
+					<td colspan="2" align="center"><input type="submit"  id="InsertData" name="InsertData"  value="Add to DB"></td>
+				  </tr>
+
+				</table>
+			</div>
+			<center>
+			
+		  </div>
+		<div>
+	</body>
+</html>
