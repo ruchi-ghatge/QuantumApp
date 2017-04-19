@@ -15,9 +15,18 @@
 			$(document).ready(function(){
 				var ajaxurl = 'helperFunctions.php';
 				var data =  {'action': 'showData'};
-				$.post(ajaxurl, data, function (response) {
-						$("#tableData").html(response);
-					});
+				
+				$.ajax(
+					{'url':ajaxurl, 'type': 'POST', 'content-type':'application/xml','data':data, success: function (response) {
+ 						$("#tableData").html(response);
+						console.log(response);
+//						document.getElementById('tableData').html(response);
+					}
+				});
+				
+// 				$.post(ajaxurl, data, function (response) {
+// 						$("#tableData").html(response);
+// 					});
 				$('#searchFunc').click(function(){
 					var clickBtnValue = $(this).val();
 					var seachKey = $('#searchKey').val()
